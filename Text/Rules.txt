@@ -1,0 +1,31 @@
+Rules :
+     . All the following rules have been implemented :
+              - Promotion of a pawn when the latter reachs the 8ith row. It can be promoted to any piece and not only to taken pieces.
+              - Check : you cannot move a piece if the movement implies a check situation
+              - Checkmate : puts an end to the game
+              - Pat : puts an end to the game. Nobody wins.
+              - Castling is allowed and follow classic rules.
+     . "En Passant" method has no been implemented. Please do not try to use it.
+
+If you want to consult the complete rules or are a beginner who want to learn how pieces move, feel free to click on the link located on the right of the rules. Before that make sure you have an internet connexion.
+
+How to play :
+     . At a given turn, you may choose to move any piece you desire. To do that, you have to click on the said piece and then, the squares you can go to will be highlighted (green for normal movements, red for castling moves). By clicking on a highlighted piece, you will immediatly be moved to it.
+     . To allow the next player to play, you have to validate your move by clicking on the validate button, located under the Chessboard     
+     . Undoing a move :  As long as you have not validated your move, you can decide to un-do the latter by clicking on the left arrow located under the chessboard.
+     . You can as well re-do the move you've juste un-done by clicking on the right arrow under the chessboard
+
+Specifics to AI:
+     . Until you decide to click on a button, the last move of the AI is highlighted in blue so that you can know easily what it has done.
+
+How to quit the game or lauching another game:
+     . As you may have noticed already, you can close the playing window by clicking on the top cross button. However that xloses the application. To quit the game and lauch another one, you have to go inside the menu bar and click on Game then Stop Game. 
+     . Were you to be interested in lauching multiples games at the same time, it is totally possible. You just have to click on the Window menu then on Open Menu Window. You will then be told to choose your mode, please do so and you will be able to continue all your parties simutanuously.
+ 
+Other functionalities :
+     .  Saving your party : every time it is your turn to play, you can go inside the Game menu and decide to save your game by clicking on save game. You will then be able to play that game again.
+     . You can decide to open a pre-existing game from the beginning window (one of those you saved). However you can also choose to do so from the play window thanks to the Game Menu. Please be careful, in the latter case doing so will close the current game. If it is not what you want to do, please open a Menu Window as described over.
+     . You can also decide at any time to manage the games you saved from the Managing menu (play window) or the Managing Files button (Menu Window). Be careful, once it has been deleted, you cannot retrieve it.
+     .
+
+Everyone in the teams hope that you will have fun playing our game ! Good luck !
