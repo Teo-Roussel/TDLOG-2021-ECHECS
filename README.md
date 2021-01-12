@@ -4,8 +4,9 @@ TDLOG Repository - Project by Antonin Boisneault, Hamza Zerhouni, Robin Boezenne
 This repository contains everything you need in order to play our application. 
 If you are under Windows, please download our Application Installer which you can download by clicking on the link inside the folder named Application.
 Sadly we did not produce an application that works under MAC-OS or Linux. 
+
 Therefore, you're free to download all our codes in order to use it through python 3.7 and over. For that please download the folder Projects_Code.zip
-Once it is done and you've extracted the files in your favorite repository, please open a terminal that is linked to your version of python. Then go into the Install-Module-Pybind folder then turn-on your internet connexion and write :
+Once it is done and you've extracted the files in your favorite repository, please open a terminal that is linked to your python environment. Then go into the Install-Module-Pybind folder then turn-on your internet connexion and write :
 ```
 python setup.py install
 ```
