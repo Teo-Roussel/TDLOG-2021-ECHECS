@@ -1,1 +1,0 @@
-Ponts'Chess will be stocked inside a folder named PontsChess except if you make changes (which is not recommanded). Inside that folder will be a proper uninstall system named unins000.exe which you can use to uninstall the application.
