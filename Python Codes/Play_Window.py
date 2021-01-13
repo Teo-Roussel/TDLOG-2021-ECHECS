@@ -52,19 +52,17 @@ FEN_to_Piece = {"r" : (Tower,1), "R" : (Tower,2),"k" : (King,1), "K" : (King,2),
 global FEN_to_Pawn
 FEN_to_Pawn = {("p",1):(PawnL,1),("p",2) : (PawnR,1),("P",1) : (PawnR,2),("P",2):(PawnL,2)}
 
-global Conv_Square_IG_to_IA
-Conv_Square_IG_to_IA = {}
-for i in range(8):
-    key_i = 8*(8-(i+1))
-    for j in range(8):
-        key_ij = j + key_i
-        Conv_Square_IG_to_IA[i*8+j] = key_ij
-
 global Conv_Square_IA_to_IG
 Conv_Square_IA_to_IG = {}
 for i in range(8):
     for j in range(8):
-        Conv_Square_IA_to_IG[Conv_Square_IG_to_IA[i*8+j]] = i*8+j
+        Conv_Square_IA_to_IG[i*8+j] = 63 - (i*8+j)
+
+global Conv_Square_IG_to_IA
+Conv_Square_IG_to_IA = {}
+for i in range(8):
+    for j in range(8):
+        Conv_Square_IG_to_IA[Conv_Square_IA_to_IG[i*8+j]] = i*8+j
 
 
 
@@ -257,9 +255,15 @@ class PersonnalButton(object):
         if self.fenetreAssoc.PVP:
             locationForTower = np.array([locationKingToMove[0] + (-1 if self.location[0] ==2 else 1), self.location[1]])
             locationTowerToMove = np.array([0 if self.location[0] == 2 else 7 ,locationKingToMove[1]])
-        else :
+
+        elif self.fenetreAssoc.colorIA == 1 :
             locationForTower = np.array([locationKingToMove[0], self.location[1] + (1 if self.location[1] == 2 else -1)])
             locationTowerToMove = np.array([locationKingToMove[0],0 if self.location[1] == 2 else 7])
+
+        else:
+            locationForTower = np.array([locationKingToMove[0], self.location[1] + (1 if self.location[1] == 1 else -1)])
+            locationTowerToMove = np.array([locationKingToMove[0],0 if self.location[1] == 1 else 7])
+
 
 
         #================== Getting piece to move ===================#
@@ -1148,7 +1152,7 @@ class Ui_PlayWindow(object):
             icon = QtGui.QIcon()
             icon.addPixmap(QtGui.QPixmap(nameIcon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
             self.Tab[0,k].button.setIcon(icon)
-            self.Tab[0,k].pieceAssoc = Piece(self.Damier,InitAssocPieces[k],colorUpper,np.array([0,k]),self.Tab,self.PVP)
+            self.Tab[0,k].pieceAssoc = Piece(self.Damier,OrderPieces[k],colorUpper,np.array([0,k]),self.Tab,self.PVP)
             self.Damier.Dam[0+2,k+2] = colorUpper
 
         iconP1 = QtGui.QIcon()
@@ -1172,7 +1176,7 @@ class Ui_PlayWindow(object):
             icon = QtGui.QIcon()
             icon.addPixmap(QtGui.QPixmap(nameIcon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
             self.Tab[7,k].button.setIcon(icon)
-            self.Tab[7,k].pieceAssoc = Piece(self.Damier,InitAssocPieces[k],colorDown,np.array([7,k]),self.Tab,self.PVP)
+            self.Tab[7,k].pieceAssoc = Piece(self.Damier,OrderPieces[k],colorDown,np.array([7,k]),self.Tab,self.PVP)
             self.Damier.Dam[7+2,k+2] = colorDown
 
 
@@ -1235,6 +1239,7 @@ class Ui_PlayWindow(object):
 
     def UndoAction(self):
         if self.player_Save != -1 : #Allows to know wether there has been an action
+            self.DamierIA.undo_move()
             for mov in self.Mov :
                 if mov != []:
                     loc = mov[0]
@@ -1243,29 +1248,27 @@ class Ui_PlayWindow(object):
                     pld.CancelMov(self.Tab,self.Damier,loc,formerLoc,pieceTaken)
                     pos_ini = 8*formerLoc[0] + formerLoc[1]
                     pos_fin = 8*loc[0] + loc[1]
-                    self.DamierIA.undo_move()
                     if pieceTaken != None :
                         self.Tab[0,0].RemoveTakenPiece(self.player_Save)
 
-        if self.player_Save == 1:
+        if self.player_Save == 1 and self.Damier.CastleBGrand_Save != None:
             self.Damier.CastleBGrand = self.Damier.CastleBGrand_Save
             self.Damier.CastleBSmall = self.Damier.CastleBSmall_Save
             self.Damier.CastleBGrand_Save = None
             self.Damier.CastleBSmall_Save = None
 
-        if self.player_Save == 2:
+        if self.player_Save == 2 and self.Damier.CastleWGrand_Save != None:
             self.Damier.CastleWGrand = self.Damier.CastleWGrand_Save
             self.Damier.CastleWSmall = self.Damier.CastleWSmall_Save
             self.Damier.CastleWGrand_Save = None
             self.Damier.CastleWSmall_Save = None
 
-
-            self.player = self.player_Save # Allowing to replay
-            self.player_Save = -1 # No action played
-            self.numberOfHalfMove = self.numberOfHalfMoveSave
-            self.numberOfMove = self.numberOfMove - (self.player==2)
-            self.RedoPossible = True
-            self.RedoList = self.Mov
+        self.player = self.player_Save # Allowing to replay
+        self.player_Save = -1 # No action played
+        self.numberOfHalfMove = self.numberOfHalfMoveSave
+        self.numberOfMove = self.numberOfMove - (self.player==2)
+        self.RedoPossible = True
+        self.RedoList = self.Mov
         return None
 
     def ValidateAction(self):
@@ -1305,6 +1308,7 @@ class Ui_PlayWindow(object):
                 self.VideLabel1.setText("Check Mate for {} player, {} player wins !".format(loser,winner))
                 self.player = -2 # end of the game
                 self.DisableAllButtons()
+                self.saveGame.setEnabled(False)
 
                 #---------------| Exit Button |---------------#
 
@@ -1319,6 +1323,7 @@ class Ui_PlayWindow(object):
                 self.VideLabel1.setText("Pat for {} player, no one wins".format(player_in_pat))
                 self.player = -2 # end of the game
                 self.DisableAllButtons()
+                self.saveGame.setEnabled(False)
 
                 #---------------| Exit Button |---------------#
 
@@ -1345,10 +1350,7 @@ class Ui_PlayWindow(object):
                     pos_ini = p11m.VectorInt([-42])
                     pos_fin = p11m.VectorInt([-42])
                     prom = p11m.VectorInt([-42])
-                    self.VideLabel1.setText("IA is playing...")
                     p11m.alpha_beta_exploration(self.DamierIA,pos_ini,pos_fin,prom,5)
-                    self.VideLabel1.setText('-')
-                    # p11m.alpha_beta_exploration(self.DamierIA,pos_ini,pos_fin,prom,5)
 
                     #---------------| Graphic params |---------------#
                     if self.colorIA == 2:
@@ -1367,7 +1369,7 @@ class Ui_PlayWindow(object):
                     self.caseSelec = formerLoc
                     castle = self.Tab[formerLoc[0],formerLoc[1]].pieceAssoc.piece == King and np.max(np.abs(formerLoc - newLoc))==2
 
-                     #---------------| AI Update |---------------#
+                    #---------------| AI Update |---------------#
                     self.DamierIA.bouge_piece(pos_ini[0],pos_fin[0],prom[0])
 
                     #-------------| Menu Deblock |-------------#
@@ -1379,10 +1381,10 @@ class Ui_PlayWindow(object):
                         self.Tab[newLoc[0],newLoc[1]].DeplacementNotCastle()
                         if prom[0] >= 0:
                             iconProm = QtGui.QIcon()
-                            nameProm = PiecesNames[C_to_Py[prom[0]]] + ("N" if self.colorIA == 1 else "B") + ("B" if np.sum(newLoc)%2 == 0 else "B") + ".jpg"
+                            nameProm = PiecesNames[C_to_Py[prom[0]]] + ("N" if self.colorIA == 1 else "B") + ("B" if np.sum(newLoc)%2 == 0 else "N") + ".png"
                             iconProm.addPixmap(QtGui.QPixmap(nameProm), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-                            self.Tab[newLoc[0],newLoc[1]].pieceAssoc.piece = C_to_Py[prom[0]]
                             self.Tab[newLoc[0],newLoc[1]].button.setIcon(iconProm)
+                            self.Tab[newLoc[0],newLoc[1]].pieceAssoc = Piece(self.Damier,C_to_Py[prom[0]],self.Tab[newLoc[0],newLoc[1]].pieceAssoc.couleur,newLoc,self.Tab,self.PVP)
                         self.ValidateAction()
                     else:
                         self.Tab[newLoc[0],newLoc[1]].DeplacementForCastle()
@@ -1402,6 +1404,9 @@ class Ui_PlayWindow(object):
             loc = mov_For_IA[1]
             pos_ini = 8*formerLoc[0] + formerLoc[1]
             pos_fin = 8*loc[0] + loc[1]
+            if self.colorIA == 2:
+                pos_ini = Conv_Square_IG_to_IA[pos_ini]
+                pos_fin = Conv_Square_IG_to_IA[pos_fin]
             self.DamierIA.bouge_piece(pos_fin,pos_ini,-1)
             for mov in self.RedoList :
                 if mov != []:
@@ -1550,7 +1555,7 @@ if __name__ == "__main__":
     Iw = Ui_MainWindow()
     Iw.setupUi(QtWidgets.QMainWindow())
 
-    g = Game(False,Iw,"Balafre",colorAI = 1)
+    g = Game(False,Iw,"Balafre",colorAI = 2)
     g.show()
     sys.exit(app.exec_())
 
