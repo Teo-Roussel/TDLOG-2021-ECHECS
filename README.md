@@ -19,7 +19,7 @@ If that works please continue; otherwise contact antonin.boisneault@eleves.enpc.
 
 Once it works, you can freely use our programm with lauching our Initial_Window.py file as script (Please be careful. It is necessary to run it as script. In Pyzo, please do Run file as script or Ctrl+Shift+E. If you're a PyCharm User, you probably already know how to do it)
 
-To fully enjoy our game, please enter the mode you want to play then your name(s) and color if AI mode. Then please if it's your first time click on the Game menu (situating in the menu bar of the playing window that has appeared) then on Rules and functionalities. It is a must to enjoy our game to the fullest with all its functionnalities
+To fully enjoy our game, please enter the mode you want to play then your name(s) and color if AI mode. Then please if it's your first time click on the Game menu (situated in the menu bar of the playing window that has appeared) then on Rules and functionalities. It is a must to enjoy our game to the fullest with all its functionnalities
 
 Good luck and have fun !
 
