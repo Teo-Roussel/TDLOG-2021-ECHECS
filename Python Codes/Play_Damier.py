@@ -307,36 +307,68 @@ class Piece:
 
 
         else:
-            #======================| Castle for Black pieces |======================#
-            if self.couleur == 1 and self.piece == King :
-                lineKing = self.localisation[0]
-                #-------------------| Grand Castle |-------------------#
-                if self.DamAssoc.CastleBGrand == True:
-                    if self.DamAssoc.Dam[2+lineKing,2+1]==0 and self.DamAssoc.Dam[2+lineKing,2+2]==0 and self.DamAssoc.Dam[2+lineKing,2+3]==0 and self.TabAssoc[0,0].pieceAssoc.piece==Tower:
-                        if not isAttacked(np.array([lineKing,1]),self.TabAssoc,self.couleur) and not isAttacked(np.array([lineKing,2]),self.TabAssoc,self.couleur) and not isAttacked(np.array([lineKing,3]),self.TabAssoc,self.couleur) and not isAttacked(self.localisation,self.TabAssoc,self.couleur):
-                            CastleDeplacement+=[np.array([lineKing,2])]
+            if self.TabAssoc[0,0].fenetreAssoc.colorIA == 1:
+                #======================| Castle for Black pieces |======================#
+                if self.couleur == 1 and self.piece == King :
+                    lineKing = self.localisation[0]
+                    #-------------------| Grand Castle |-------------------#
+                    if self.DamAssoc.CastleBGrand == True:
+                        if self.DamAssoc.Dam[2+lineKing,2+1]==0 and self.DamAssoc.Dam[2+lineKing,2+2]==0 and self.DamAssoc.Dam[2+lineKing,2+3]==0 and self.TabAssoc[0,0].pieceAssoc.piece==Tower:
+                            if not isAttacked(np.array([lineKing,1]),self.TabAssoc,self.couleur) and not isAttacked(np.array([lineKing,2]),self.TabAssoc,self.couleur) and not isAttacked(np.array([lineKing,3]),self.TabAssoc,self.couleur) and not isAttacked(self.localisation,self.TabAssoc,self.couleur):
+                                CastleDeplacement+=[np.array([lineKing,2])]
 
-                #-------------------| Small Castle |-------------------#
-                if self.DamAssoc.CastleBSmall == True:
-                    if self.DamAssoc.Dam[2+lineKing,2+5]==0 and self.DamAssoc.Dam[2+lineKing,2+6]==0 and self.TabAssoc[lineKing,7].pieceAssoc.piece==Tower:
-                        if not isAttacked(np.array([lineKing,5]),self.TabAssoc,self.couleur) and not isAttacked(np.array([lineKing,6]),self.TabAssoc,self.couleur) and not isAttacked(self.localisation, self.TabAssoc,self.couleur):
-                            CastleDeplacement+=[np.array([lineKing,6])]
+                    #-------------------| Small Castle |-------------------#
+                    if self.DamAssoc.CastleBSmall == True:
+                        if self.DamAssoc.Dam[2+lineKing,2+5]==0 and self.DamAssoc.Dam[2+lineKing,2+6]==0 and self.TabAssoc[lineKing,7].pieceAssoc.piece==Tower:
+                            if not isAttacked(np.array([lineKing,5]),self.TabAssoc,self.couleur) and not isAttacked(np.array([lineKing,6]),self.TabAssoc,self.couleur) and not isAttacked(self.localisation, self.TabAssoc,self.couleur):
+                                CastleDeplacement+=[np.array([lineKing,6])]
 
-            #======================| Castle for Whites pieces |======================#
-            elif self.couleur == 2 and self.piece == King:
-                lineKing = self.localisation[0]
-                self.lineKing = self.localisation[0]
-                #-------------------| Grand Castle |-------------------#
-                if self.DamAssoc.CastleWGrand == True:
-                    if self.DamAssoc.Dam[2+lineKing,2+1]==0 and self.DamAssoc.Dam[2+lineKing,2+2]==0 and self.DamAssoc.Dam[2+lineKing,2+3]==0 and self.TabAssoc[lineKing,0].pieceAssoc.piece==Tower:
-                        if not isAttacked(np.array([lineKing,1]),self.TabAssoc,self.couleur) and not isAttacked(np.array([lineKing,2]),self.TabAssoc,self.couleur) and not isAttacked(np.array([lineKing,3]),self.TabAssoc,self.couleur) and not isAttacked(self.localisation,self.TabAssoc,self.couleur):
-                            CastleDeplacement+=[np.array([lineKing,2])]
+                #======================| Castle for Whites pieces |======================#
+                elif self.couleur == 2 and self.piece == King:
+                    lineKing = self.localisation[0]
+                    #-------------------| Grand Castle |-------------------#
+                    if self.DamAssoc.CastleWGrand == True:
+                        if self.DamAssoc.Dam[2+lineKing,2+1]==0 and self.DamAssoc.Dam[2+lineKing,2+2]==0 and self.DamAssoc.Dam[2+lineKing,2+3]==0 and self.TabAssoc[lineKing,0].pieceAssoc.piece==Tower:
+                            if not isAttacked(np.array([lineKing,1]),self.TabAssoc,self.couleur) and not isAttacked(np.array([lineKing,2]),self.TabAssoc,self.couleur) and not isAttacked(np.array([lineKing,3]),self.TabAssoc,self.couleur) and not isAttacked(self.localisation,self.TabAssoc,self.couleur):
+                                CastleDeplacement+=[np.array([lineKing,2])]
 
-                #-------------------| Small Castle |-------------------#
-                if self.DamAssoc.CastleWSmall:
-                    if self.DamAssoc.Dam[2+lineKing,2+5]==0 and self.DamAssoc.Dam[2+lineKing,2+6]==0 and self.TabAssoc[lineKing,7].pieceAssoc.piece==Tower:
-                        if not isAttacked(np.array([lineKing,5]),self.TabAssoc,self.couleur) and not  isAttacked(np.array([lineKing,6]),self.TabAssoc,self.couleur) and not isAttacked(self.localisation,self.TabAssoc,self.couleur):
-                            CastleDeplacement+=[np.array([lineKing,6])]
+                    #-------------------| Small Castle |-------------------#
+                    if self.DamAssoc.CastleWSmall:
+                        if self.DamAssoc.Dam[2+lineKing,2+5]==0 and self.DamAssoc.Dam[2+lineKing,2+6]==0 and self.TabAssoc[lineKing,7].pieceAssoc.piece==Tower:
+                            if not isAttacked(np.array([lineKing,5]),self.TabAssoc,self.couleur) and not  isAttacked(np.array([lineKing,6]),self.TabAssoc,self.couleur) and not isAttacked(self.localisation,self.TabAssoc,self.couleur):
+                                CastleDeplacement+=[np.array([lineKing,6])]
+
+            else:
+                #======================| Castle for Black pieces |======================#
+                if self.couleur == 1 and self.piece == King :
+                    lineKing = self.localisation[0]
+                    #-------------------| Grand Castle |-------------------#
+                    if self.DamAssoc.CastleBGrand == True:
+                        if self.DamAssoc.Dam[2+lineKing,2+4]==0 and self.DamAssoc.Dam[2+lineKing,2+5]==0 and self.DamAssoc.Dam[2+lineKing,2+6]==0 and self.TabAssoc[0,7].pieceAssoc.piece==Tower:
+                            if not isAttacked(np.array([lineKing,4]),self.TabAssoc,self.couleur) and not isAttacked(np.array([lineKing,5]),self.TabAssoc,self.couleur) and not isAttacked(np.array([lineKing,6]),self.TabAssoc,self.couleur) and not isAttacked(self.localisation,self.TabAssoc,self.couleur):
+                                CastleDeplacement+=[np.array([lineKing,5])]
+
+                    #-------------------| Small Castle |-------------------#
+                    if self.DamAssoc.CastleBSmall == True:
+                        if self.DamAssoc.Dam[2+lineKing,2+1]==0 and self.DamAssoc.Dam[2+lineKing,2+2]==0 and self.TabAssoc[lineKing,0].pieceAssoc.piece==Tower:
+                            if not isAttacked(np.array([lineKing,1]),self.TabAssoc,self.couleur) and not isAttacked(np.array([lineKing,2]),self.TabAssoc,self.couleur) and not isAttacked(self.localisation, self.TabAssoc,self.couleur):
+                                CastleDeplacement+=[np.array([lineKing,1])]
+
+                #======================| Castle for Whites pieces |======================#
+                elif self.couleur == 2 and self.piece == King:
+                    lineKing = self.localisation[0]
+                    self.lineKing = self.localisation[0]
+                    #-------------------| Grand Castle |-------------------#
+                    if self.DamAssoc.CastleWGrand == True:
+                        if self.DamAssoc.Dam[2+lineKing,2+4]==0 and self.DamAssoc.Dam[2+lineKing,2+5]==0 and self.DamAssoc.Dam[2+lineKing,2+6]==0 and self.TabAssoc[lineKing,7].pieceAssoc.piece==Tower:
+                            if not isAttacked(np.array([lineKing,4]),self.TabAssoc,self.couleur) and not isAttacked(np.array([lineKing,5]),self.TabAssoc,self.couleur) and not isAttacked(np.array([lineKing,6]),self.TabAssoc,self.couleur) and not isAttacked(self.localisation,self.TabAssoc,self.couleur):
+                                CastleDeplacement+=[np.array([lineKing,5])]
+
+                    #-------------------| Small Castle |-------------------#
+                    if self.DamAssoc.CastleWSmall:
+                        if self.DamAssoc.Dam[2+lineKing,2+1]==0 and self.DamAssoc.Dam[2+lineKing,2+2]==0 and self.TabAssoc[lineKing,0].pieceAssoc.piece==Tower:
+                            if not isAttacked(np.array([lineKing,1]),self.TabAssoc,self.couleur) and not  isAttacked(np.array([lineKing,2]),self.TabAssoc,self.couleur) and not isAttacked(self.localisation,self.TabAssoc,self.couleur):
+                                CastleDeplacement+=[np.array([lineKing,1])]
 
         return CastleDeplacement
 
