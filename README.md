@@ -2,7 +2,7 @@
 TDLOG Repository - Project by Antonin Boisneault, Hamza Zerhouni, Robin Boezennec and Teo Roussel
 
 This repository contains everything you need in order to play our application. 
-If you are under Windows, please download our Application Installer which you can download by clicking on the link inside the folder named Application.
+If you are under Windows 64 bits, please download our Application Installer which you can download by clicking on the link inside the folder named Application.
 Sadly we did not produce an application that works under MAC-OS or Linux. 
 
 Therefore, you're free to download all our codes in order to use it through python 3.7 and over. For that please download the folder Projects_Code.zip
