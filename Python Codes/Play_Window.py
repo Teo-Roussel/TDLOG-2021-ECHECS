@@ -8,6 +8,7 @@ import numpy as np
 import moduleAI as p11m
 import Enreg_Window as ErW
 import HandleFiles as HdF
+import AI_Level as AiL
 
 
 ## Globals
@@ -260,6 +261,7 @@ class PersonnalButton(object):
                     if self.fenetreAssoc.colorIA == 2:
                         pos_ini = Conv_Square_IG_to_IA[pos_ini]
                         pos_fin = Conv_Square_IG_to_IA[pos_fin]
+                        prom = self.fenetreAssoc.DamierIA(pos_ini).Id
 
                     if (
                         self.pieceAssoc.piece == PawnR
@@ -1033,6 +1035,7 @@ class Ui_PlayWindow(object):
         self.colorIA = 1 if colorAI == None else colorAI
         self.fakeColorIA = self.colorIA if colorAI != 2 else 1
         self.MovIA = []
+        self.difficultyAI = 5
 
         # ---------------------------#
         #        Name Fields        #
@@ -1191,9 +1194,19 @@ class Ui_PlayWindow(object):
         self.manageFile.triggered.connect(self.handle_File)
         self.menuFile.addAction(self.manageFile)
 
+        self.menuAI = QtWidgets.QMenu(self.menubar)
+        self.menuAI.setObjectName("menuAI")
+        self.manageAI = QtWidgets.QAction(
+            QtGui.QIcon("Images_IG/AIIcon.png"), "Manage AI Level", self.MainWindow
+        )
+        self.manageAI.setObjectName("manageAI")
+        self.manageAI.triggered.connect(self.levelIA)
+        self.menuAI.addAction(self.manageAI)
+
         self.menubar.addAction(self.menuWindow.menuAction())
         self.menubar.addAction(self.menuGame.menuAction())
         self.menubar.addAction(self.menuFile.menuAction())
+        self.menubar.addAction(self.menuAI.menuAction())
 
         # ---------------------------#
         #       Playing Fields      #
@@ -1478,6 +1491,7 @@ class Ui_PlayWindow(object):
         self.menuWindow.setTitle(_translate("MainWindow", "Window"))
         self.menuGame.setTitle(_translate("MainWindow", "Game"))
         self.menuFile.setTitle(_translate("MainWindow", "Files"))
+        self.menuAI.setTitle(_translate("MainWindow", "AI"))
         self.FWP.setText(_translate("MainWindow", " Taken White Pieces "))
         self.BPP.setText(_translate("MainWindow", self.textB + " side"))
         self.FBP.setText(_translate("MainWindow", " Taken Black Pieces "))
@@ -1520,6 +1534,14 @@ class Ui_PlayWindow(object):
         self.EnableAllButtons()
         self.widgetRules.hide()
         self.widgetValidation.show()
+
+    def levelIA(self):
+        """
+        Allows to manage IA level through a window
+        """
+        MainWindow = QtWidgets.QMainWindow()
+        self.IaLevel = AiL.Ui_LevelWindow(MainWindow, self)
+        self.IaLevel.MainWindow.show()
 
     def handle_File(self):
         """
@@ -2006,13 +2028,14 @@ class Ui_PlayWindow(object):
                     # -------------| Menu Block |-------------#
                     self.saveGame.setEnabled(False)
                     self.openGame.setEnabled(False)
+                    self.manageAI.setEnabled(False)
 
                     # ---------------| AI move |---------------#
                     pos_ini = p11m.VectorInt([-42])
                     pos_fin = p11m.VectorInt([-42])
                     prom = p11m.VectorInt([-42])
                     p11m.alpha_beta_exploration(
-                        self.DamierIA, pos_ini, pos_fin, prom, 5
+                        self.DamierIA, pos_ini, pos_fin, prom, self.difficultyAI
                     )
 
                     # ---------------| Graphic params |---------------#
@@ -2045,6 +2068,7 @@ class Ui_PlayWindow(object):
                     # -------------| Menu Deblock |-------------#
                     self.saveGame.setEnabled(True)
                     self.openGame.setEnabled(True)
+                    self.manageAI.setEnabled(True)
 
                     # ---------------| Graphic update |---------------#
                     if not castle:
