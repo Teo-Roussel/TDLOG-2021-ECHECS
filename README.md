@@ -48,3 +48,8 @@ Good luck and have fun !
 Respectfully, 
 
 The Team
+
+**Agknowledgements**
+
+We truly thank Perceval Wolff, our favorite beta tester that drove our AI into a corner which allowed to bring to light many bugs that we had not discovered, and Robin Bidanchon that helped us resolve all problems related to Linux. Last, we thank Xavier Clerc and Louis Trezzini that helped us throughout the entire project.   
+
