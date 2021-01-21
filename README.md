@@ -9,7 +9,7 @@ Therefore, you're free to download all our codes in order to use it through pyth
 
 **Under Win64**
 
-Once it is done and you've extracted the files in your favorite repository, please open a terminal that is linked to your python environment. Then go into the Install-Module-Pybind folder then turn-on your internet connexion and write :
+Once it is done and you've extracted the files in your favorite repository, please open a terminal that is linked to your python environment. Then go into the moduleAI folder then turn-on your internet connexion and write :
 ```
 python setup.py install
 ```
