@@ -33,6 +33,7 @@ python -m pip install virtualenv #if you do not have the module
 python -m virtualenv NAMEENVIRONMENT 
 python -m pip install -r requirements.txt
 ```
+If you think it is not clear enough, please refer to the PDF file named Virtualenv_Explanations
 
 
 **Playing the game**
