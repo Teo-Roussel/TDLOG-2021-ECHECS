@@ -21,7 +21,7 @@ If that works please continue; otherwise contact antonin.boisneault@eleves.enpc.
 
 Since one of the modules we use does not work properly except under Win64, you will have to create a virtual environment to make sure the codes will be executed. We have created that environment for you. It is at your disposition inside the folder named venvChess. Go inside that folder then inside the Script folder, trigger a command prompt linked to python then tap :
 ```
-activate
+ . activate
 ```
 Then navigate and returns to the aforementionned moduleAI folder and execute the commands listed in the previous section.
 
