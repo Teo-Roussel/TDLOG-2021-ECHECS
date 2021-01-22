@@ -17,24 +17,23 @@ ATTENTION : Under Win64, you need to have Visual Studio (at least 2015) installe
 Please wait until it is finished then you can go into your favorite python IDE and try to execute the file named test.py located inside the test folder :
 If that works please continue; otherwise contact antonin.boisneault@eleves.enpc.fr
 
-**Under Linux**
+**Under MAC-Linux**
 
-Since one of the modules we use does not work properly except under Win64, you will have to create a virtual environment to make sure the codes will be executed. We have created that environment for you. It is at your disposition inside the folder named venvChess. Go inside that folder then inside the Script folder, trigger a command prompt linked to python then tap :
-```
- . activate
-```
-Then navigate and returns to the aforementionned moduleAI folder and execute the commands listed in the previous section.
+Since one of the modules we use does not work properly except under Win64, you will have to create a virtual environment to make sure the codes will be executed. All you need is then contained inside the requirements.txt located at the base of the Project_Codes folder.
 
-If you do not want to use our virtual environnement, it probably means that you're familiar with virtual environnements. All you need is then contained inside the requirements.txt located at the base of the Project_Codes folder. Then please install moduleAI by following the previous instructions.
-
-In case you do not remember, the commands to create the virtual environnement are the following :
+The commands to create the virtual environnement are the following :
 ```
 python -m pip install virtualenv #if you do not have the module
 python -m virtualenv NAMEENVIRONMENT 
-python -m pip install -r requirements.txt
 ```
 If you think it is not clear enough, please refer to the PDF file named Virtualenv_Explanations
 
+Then to activate your virtual environment please go inside the folder named "NAMEENVIRONMENT" then "bin" then execute :
+```
+. activate
+python -m pip install -r requirements.txt
+```
+Then please install moduleAI by following the instructions detailled in "Under Win64".
 
 **Playing the game**
 
