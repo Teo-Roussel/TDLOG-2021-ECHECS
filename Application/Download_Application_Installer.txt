@@ -1,8 +1,5 @@
-Please download the application you prefer from the following link :
+Please download the application from the following link :
 
 https://1drv.ms/u/s!AsycUOIUJfZ1y35St49uTQCDXYij?e=ENJDkN
-
-Notice that :
-  setup-pontschess-IA-Forte provides an AI that is stronger but slower when compared to the other version.
 
 Have fun ! 
