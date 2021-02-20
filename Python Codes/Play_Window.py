@@ -219,6 +219,8 @@ class PersonnalButton(object):
 
                 if tuple(self.location) in [tuple(pos) for pos in isCastle]:
 
+                    self.fenetreAssoc.RedoPossible = False
+                    self.fenetreAssoc.RedoList = []
                     self.DarkenDeplacements(ListPossibleDep, isCastle)
                     self.DeplacementForCastle()
                     self.fenetreAssoc.ListPossibleCase = [], []
@@ -256,6 +258,9 @@ class PersonnalButton(object):
                     self.fenetreAssoc.ListPossibleCase = [], []
                     self.fenetreAssoc.selection = True
                     self.fenetreAssoc.deplacement = False
+                    self.fenetreAssoc.RedoPossible = False
+                    self.fenetreAssoc.RedoList = []
+
                     isProm = False
 
                     if self.fenetreAssoc.colorIA == 2:
@@ -2149,6 +2154,7 @@ class Ui_PlayWindow(object):
             self.player_Save = self.player  # Current player save
             self.player = -1  # No one can play befoe validating
             self.RedoPossible = False
+            self.RedoList = []
         return None
 
     def CloseAction(self):
@@ -2292,6 +2298,6 @@ if __name__ == "__main__":
     Iw = Ui_MainWindow()
     Iw.setupUi(QtWidgets.QMainWindow())
 
-    g = Game(False, Iw, "Balafre", colorAI=2)
+    g = Game(True, Iw, "Balafre", nameP2 = "GA" ,colorAI=1)
     g.show()
     sys.exit(app.exec_())
